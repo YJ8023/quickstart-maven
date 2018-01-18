@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="quickstart.dao.UserMapperDao">
+
+    <!--<resultMap id="BaseResultMap" type="quickstart.entity.User">
+        <result column="id" jdbcType="INTEGER" property="id" />
+        <result column="login_name" jdbcType="VARCHAR" property="loginName" />
+        <result column="name" jdbcType="VARCHAR" property="name" />
+        <result column="password" jdbcType="VARCHAR" property="password" />
+        <result column="salt" jdbcType="VARCHAR" property="salt" />
+        <result column="roles" jdbcType="VARCHAR" property="roles" />
+        <result column="register_date" jdbcType="DATE" property="registerDate" />
+    </resultMap>-->
+
+    <select id="selectUserByLoginName" parameterType="string" resultType="quickstart.entity.User">
+        SELECT id, login_name AS loginName,name, password,
+        salt, roles,register_date AS registerDate
+        from ss_user
+        WHERE login_name = #{loginName}
+    </select>
+
+    <select id="findAllUser" resultType="quickstart.entity.User">
+        SELECT id, login_name AS loginName, name, password, salt, roles, register_date AS registerDate
+        FROM ss_user
+    </select>
+
+    <select id="findOne" parameterType="Long" resultType="quickstart.entity.User">
+        SELECT id, login_name AS loginName, name, password, salt, roles, register_date AS registerDate
+        FROM ss_user
+        WHERE id = #{id}
+    </select>
+
+    <delete id="deleteById" parameterType="Long">
+        DELETE FROM ss_user
+        WHERE id = #{id}
+    </delete>
+
+    <update id="update" parameterType="quickstart.entity.User">
+        UPDATE ss_user
+        SET name = #{name} , password = #{password}
+        WHERE id = #{id}
+    </update>
+
+    <insert id="save" parameterType="quickstart.entity.User">
+        INSERT INTO ss_user(login_name, name, password, salt, roles, register_date)
+        VALUES (#{loginName}, #{name}, #{password}, #{salt}, #{roles}, #{registerDate})
+    </insert>
+</mapper>
